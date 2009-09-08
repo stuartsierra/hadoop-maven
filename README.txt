@@ -1,30 +1,22 @@
 hadoop-maven
 
-This project contains a POM file for installing the Apache Hadoop JAR
-files with Maven 2.
+This project contains POM files for installing Apache Hadoop Core with
+Maven 2.
 
-This POM works with Apache Hadoop 0.18.3.
+These POMs work with Apache Hadoop 0.18.3.
 
-The installation created by this POM is *not* currently suitable for
-running Hadoop on a cluster.  It does not include the native-code
-libraries and may be missing some dependencies.  However, it is
-sufficient for compiling code that depends on the Hadoop APIs.
+Unfortunately, the Hadoop distribution is packaged with a number of
+non-standard JARs, including custom builds of some libraries, which
+are not found in public Maven repositories.  Therefore, there are two
+different POMs provided here:
 
 
-To use this project:
+core-pom.xml:
 
-1. Download the Apache Hadoop Core 0.18.3 distribution.
-2. Copy the pom.xml file into the Hadoop directory. 
-3. In the Hadoop directory, run the following command:
+  This POM installs only the hadoop-0.18.3-core.jar file in your local
+  Maven repository.  It does not include any dependencies.
 
-    mvn install
-
-The Hadoop core JAR will be installed in your local Maven 2
-repository.  You can reference the Hadoop Core as a dependency in your
-Maven projects with the following in your pom.xml:
-
-    <dependencies>
-      ...
+  You can refer to this artifact in your projects as:
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
@@ -32,11 +24,38 @@ Maven projects with the following in your pom.xml:
         <version>0.18.3</version>
       </dependency>
 
-      ...
-    </dependencies>
+
+core-with-dependencies.xml
+
+  This POM merges the hadoop-0.18.3-core.jar, hadoop-0.18.3-tools.jar,
+  and all the JAR files in the lib/ directory of the Hadoop
+  distribution into one large JAR named
+  hadoop-core-with-dependencies-0.18.3.jar.
+
+  This does not include the native code libraries.
+
+  You can refer to this artifact in your projects as:
+
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-core-with-dependencies</artifactId>
+        <version>0.18.3</version>
+      </dependency>
 
 
-If you maintain your own Maven 2 repository, you can add your own
+
+To install Hadoop using these POMs:
+
+1. Download the Apache Hadoop Core 0.18.3 distribution.
+2. Copy your preferred POM file into the Hadoop directory.
+3. In the Hadoop directory, run:
+
+    mvn -f name-of-pom.xml install
+
+The project will be installed in your local Maven 2 repository and can
+be referenced as a dependency in your own POMs.
+
+If you maintain your own Maven 2 repository, you can add a
 <distributionManagement> section to the pom.xml and then run
 "mvn deploy" to deploy it.
 
