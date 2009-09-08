@@ -14,12 +14,14 @@ sufficient for compiling code that depends on the Hadoop APIs.
 To use this project:
 
 1. Download the Apache Hadoop Core 0.18.3 distribution.
-2. Copy pom.xml into the distribution directory. 
-3. Run "mvn install" in the distribution directory.
+2. Copy the pom.xml file into the Hadoop directory. 
+3. In the Hadoop directory, run the following command:
 
-The Hadoop core JAR is now installed in your local Maven 2 repository.
-You can reference Hadoop as a dependency in your Maven projects with
-the following in your pom.xml:
+    mvn install
+
+The Hadoop core JAR will be installed in your local Maven 2
+repository.  You can reference the Hadoop Core as a dependency in your
+Maven projects with the following in your pom.xml:
 
     <dependencies>
       ...
